@@ -46,3 +46,4 @@ group :development, :test do
 end
 
 gem 'omniauth'
+gem 'omniauth-github'
