@@ -1,0 +1,21 @@
+$black: #000;
+$dark: #131313;
+
+body {
+    background: $dark;
+    font-family: 'Lucida Console', monospaced;
+    color: #fff;
+}
+
+.document-menu {
+    background: $black;
+}
+
+@media (min-width: 768px) {
+    .document-menu {
+        width: 400px;
+        position: fixed;
+        top: 0;
+        right: 0;
+    }
+}

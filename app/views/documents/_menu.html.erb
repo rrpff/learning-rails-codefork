@@ -21,9 +21,9 @@
         </ul>
         <ul class="options">
             <% if current_user === @document.user %>
-                <li>Like</li>
-            <% else %>
                 <li><%= link_to 'Update', edit_document_path(@document) %></li>
+            <% else %>
+                <li>Like</li>
             <% end %>
             <li>Fork</li>
             <li>Share</li>
