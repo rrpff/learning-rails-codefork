@@ -4,5 +4,9 @@
     <h1>Codefork</h1>
     <p>Code pastebin thing.</p>
 
-    <%= link_to 'Sign in with Github', '/auth/github' %>
+    <% if user_signed_in? %>
+        Hello <%= current_user.username %>. <%= link_to 'Sign out.', logout_path %>
+    <% else %>
+        <%= link_to 'Sign in with Github', '/auth/github' %>
+    <% end %>
 </header>
