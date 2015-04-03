@@ -1,5 +1,30 @@
 <%= render 'menu' %>
 
+<% if not @document.name.blank? %>
+    <%= yield :menu do %>
+        <ul class="metadata">
+            <li><%= @document.name %></li>
+            <li><%= @document.language %></li>
+            <li>Posted <%= time_ago_in_words @document.created_at %></li>
+        </ul>
+        <ul class="options">
+            <% if current_user === @document.user %>
+                <li><%= link_to 'Update', edit_document_path(@document) %></li>
+                <li><%= link_to 'Delete', @document,
+                    method: :delete,
+                    data: {
+                        confirm: "Are you sure you want to delete #{@document.name}?"
+                    }
+                %></li>
+            <% else %>
+                <li>Like</li>
+            <% end %>
+            <li>Fork</li>
+            <li>Share</li>
+        </ul>
+    <% end %>
+<% end %>
+
 <pre>
     <code>
         <%= @document.content %>

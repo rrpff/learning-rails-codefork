@@ -1,8 +1,19 @@
 <%= form_for @document do |f| %>
 
+    <% if @document.errors.any? %>
+        <section class="errors">
+            <h3>Found <%= pluralize(@document.errors.size, 'error') %>.</h3>
+            <ul>
+                <% for message in @document.errors.full_messages %>
+                    <li><%= message %></li>
+                <% end %>
+            </ul>
+        </section>
+    <% end %>
+
     <p>
         <%= f.label :name %>
-        <%= f.text_field :name %>
+        <%= f.text_field :name, autofocus: true %>
     </p>
 
     <p>
@@ -12,7 +23,7 @@
 
     <p>
         <%= f.label :content %>
-        <%= f.text_area :content %>
+        <%= f.text_area :content, id: 'code-editor' %>
     </p>
 
     <p>

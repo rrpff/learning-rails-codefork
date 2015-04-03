@@ -1,6 +1,6 @@
 class Document < ActiveRecord::Base
     belongs_to :user
-    validates :name, :content,
+    validates :name, :language, :content,
         presence: true,
         length: {
             minimum: 1

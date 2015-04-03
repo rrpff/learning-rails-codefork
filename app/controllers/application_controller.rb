@@ -13,7 +13,17 @@ class ApplicationController < ActionController::Base
     end
 
     def user_signed_in?
-        session[:user_id]
+        if session[:user_id]
+            # If session is set, ensure user exists
+            # and clear session if not
+            if not User.where(id: session[:user_id]).any?
+                session[:user_id] = nil
+            end
+
+            session[:user_id]
+        else
+            nil
+        end
     end
 
     def authenticate_user!

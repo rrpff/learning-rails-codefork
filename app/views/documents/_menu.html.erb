@@ -13,21 +13,6 @@
         <% end %>
     </ul>
 
-    <% if @document.name %>
-        <ul class="metadata">
-            <li><%= @document.name %></li>
-            <li><%= @document.language %></li>
-            <li>Posted <%= time_ago_in_words @document.created_at %></li>
-        </ul>
-        <ul class="options">
-            <% if current_user === @document.user %>
-                <li><%= link_to 'Update', edit_document_path(@document) %></li>
-            <% else %>
-                <li>Like</li>
-            <% end %>
-            <li>Fork</li>
-            <li>Share</li>
-        </ul>
-    <% end %>
+    <%= yield :menu %>
 
 </section>
