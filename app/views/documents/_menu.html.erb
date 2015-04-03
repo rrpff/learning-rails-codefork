@@ -1,0 +1,33 @@
+<%= content_for :title, @document.name || 'New document' %>
+
+<section class="document-menu">
+
+    <h3>codefork</h3>
+
+    <ul class="account">
+        <% if user_signed_in? %>
+            <li><%= current_user.username %></li>
+            <li><%= link_to 'Logout', logout_path %></li>
+        <% else %>
+            <li><%= link_to 'Sign in with Github', '/auth/github' %></li>
+        <% end %>
+    </ul>
+
+    <% if @document.name %>
+        <ul class="metadata">
+            <li><%= @document.name %></li>
+            <li><%= @document.language %></li>
+            <li>Posted <%= time_ago_in_words @document.created_at %></li>
+        </ul>
+        <ul class="options">
+            <% if current_user === @document.user %>
+                <li>Like</li>
+            <% else %>
+                <li><%= link_to 'Update', edit_document_path(@document) %></li>
+            <% end %>
+            <li>Fork</li>
+            <li>Share</li>
+        </ul>
+    <% end %>
+
+</section>

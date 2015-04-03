@@ -1,5 +1,8 @@
 class DocumentsController < ApplicationController
 
+    before_action :authenticate_user!,
+        except: [:index, :show]
+
     def index
         @documents = latest Document.all
     end
@@ -18,6 +21,7 @@ class DocumentsController < ApplicationController
 
     def create
         @document = Document.new document_params
+        @document.user = current_user
 
         if @document.save
             redirect_to @document
@@ -40,7 +44,7 @@ class DocumentsController < ApplicationController
 
     def document_params
         params.require(:document)
-            .permit(:title, :content, :)
+            .permit(:name, :language, :content)
     end
 
 end
