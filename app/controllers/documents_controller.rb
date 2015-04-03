@@ -58,6 +58,17 @@ class DocumentsController < ApplicationController
 
     end
 
+    def fork
+        @parent = Document.find params[:id]
+        @document = clone_and_reassign_document @parent
+
+        if @document.update forked: true, forked_from: @parent.id
+            redirect_to edit_document_path @document, notice: 'Document forked!'
+        else
+            render @parent, alert: 'Document could not be duplicated'
+        end
+    end
+
     private
 
     def document_params
@@ -73,6 +84,14 @@ class DocumentsController < ApplicationController
 
     def user_has_permission_to_modify?(document)
         return user_signed_in? ? current_user.id === document.user.id : false
+    end
+
+    def clone_and_reassign_document(parent)
+        document = parent.dup
+        document.user = current_user
+        document.user_id = current_user.id
+
+        document
     end
 
 end

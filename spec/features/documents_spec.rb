@@ -52,7 +52,7 @@ RSpec.feature "Documents", type: :feature do
 
         scenario 'Document exists' do
             visit '/1'
-            page.should have_content 'user'
+            page.should have_content 'this_is_you'
             page.should have_content 'text'
             page.should have_content 'test'
         end
@@ -104,6 +104,22 @@ RSpec.feature "Documents", type: :feature do
             visit '/2'
 
             page.should_not have_content 'Delete'
+        end
+
+    end
+
+    feature 'Forking a document' do
+
+        scenario 'Forking any document' do
+            visit '/2'
+
+            click_link 'Fork'
+            current_path.should === '/3/edit'
+
+            click_button 'Update Document'
+
+            current_path.should === '/3'
+            page.should have_content 'this_is_you'
         end
 
     end

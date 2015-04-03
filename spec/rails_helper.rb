@@ -58,7 +58,7 @@ OmniAuth.config.add_mock :github, {
   provider: 'github',
   uid: '12345',
   info: {
-    nickname: 'user',
+    nickname: 'this_is_you',
     avatar: 'https://avatars.githubusercontent.com/u/34348?v=3'
   }
 }

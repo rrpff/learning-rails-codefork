@@ -1,7 +1,5 @@
-<%= render 'menu' %>
-
 <% if not @document.name.blank? %>
-    <%= yield :menu do %>
+    <%= content_for :menu do %>
         <ul class="metadata">
             <li><%= @document.name %></li>
             <li><%= @document.language %></li>
@@ -19,11 +17,12 @@
             <% else %>
                 <li>Like</li>
             <% end %>
-            <li>Fork</li>
-            <li>Share</li>
+            <li><%= link_to 'Fork', fork_document_path(@document) %></li>
         </ul>
     <% end %>
 <% end %>
+
+<%= render 'menu' %>
 
 <pre>
     <code>

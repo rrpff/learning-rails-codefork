@@ -11,15 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150403051850) do
+ActiveRecord::Schema.define(version: 20150403162609) do
 
   create_table "documents", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "name"
     t.string   "language"
     t.text     "content"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.boolean  "forked",      default: false
+    t.string   "forked_from"
   end
 
   add_index "documents", ["user_id"], name: "index_documents_on_user_id"
