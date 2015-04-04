@@ -1,33 +1,16 @@
-<%= form_for @document do |f| %>
-
-    <% if @document.errors.any? %>
-        <section class="errors">
-            <h3>Found <%= pluralize(@document.errors.size, 'error') %>.</h3>
-            <ul>
-                <% for message in @document.errors.full_messages %>
-                    <li><%= message %></li>
-                <% end %>
-            </ul>
-        </section>
+<% if @document.errors.any? %>
+    <%= content_for :errors do %>
+        <% for message in @document.errors.full_messages %>
+            <li><%= message %></li>
+        <% end %>
     <% end %>
+<% end %>
 
-    <p>
-        <%= f.label :name %>
-        <%= f.text_field :name, autofocus: true %>
-    </p>
-
-    <p>
-        <%= f.label :language %>
-        <%= f.text_field :language %>
-    </p>
-
-    <p>
-        <%= f.label :content %>
-        <%= f.text_area :content, id: 'code-editor' %>
-    </p>
-
-    <p>
+<%= content_for :menu do %>
+    <%= form_for @document, remote: true do |f| %>
+        <%= f.text_field :name, autofocus: true, placeholder: 'Name' %>
+        <%= f.select :language, '<option>Select language</option>' %>
+        <%= f.text_area :content %>
         <%= f.submit %>
-    </p>
-
+    <% end %>
 <% end %>

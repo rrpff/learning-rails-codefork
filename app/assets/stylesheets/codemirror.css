@@ -23,7 +23,7 @@
 /* GUTTER */
 
 .CodeMirror-gutters {
-  border-right: 1px solid #ddd;
+  border-right: 1px solid transparent;
   background-color: #f7f7f7;
   white-space: nowrap;
 }
@@ -42,7 +42,7 @@
 /* CURSOR */
 
 .CodeMirror div.CodeMirror-cursor {
-  border-left: 1px solid black;
+  border-left: 1px solid #fff;
 }
 /* Shown when moving in bi-directional text */
 .CodeMirror div.CodeMirror-secondarycursor {

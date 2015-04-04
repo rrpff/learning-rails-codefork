@@ -1,9 +1,11 @@
 <ul class="flashes">
     <% if alert %>
-        <li><%= alert %></li>
+        <li class='alert'><%= alert %></li>
     <% end %>
 
+    <% yield :errors %>
+
     <% if notice %>
-        <li><%= notice %></li>
+        <li class='notice'><%= notice %></li>
     <% end %>
 </ul>
