@@ -7,10 +7,14 @@
 <% end %>
 
 <%= content_for :menu do %>
-    <%= form_for @document, remote: true do |f| %>
+    <%= form_for @document do |f| %>
         <%= f.text_field :name, autofocus: true, placeholder: 'Name' %>
         <%= f.select :language, '<option>Select language</option>' %>
         <%= f.text_area :content %>
         <%= f.submit %>
     <% end %>
+<% end %>
+
+<% if @document %>
+    <script>var document = JSON.parse('<%= @document.to_json.html_safe %>');</script>
 <% end %>

@@ -14,3 +14,5 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_directory .
+//= require_directory ./mode
+//= require_directory ./addon/mode
