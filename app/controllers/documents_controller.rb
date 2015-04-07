@@ -5,10 +5,6 @@ class DocumentsController < ApplicationController
 
     around_filter :catch_record_not_found
 
-    def index
-        @documents = latest Document.all
-    end
-
     def new
         @document = Document.new
     end
@@ -17,7 +13,7 @@ class DocumentsController < ApplicationController
         @document = Document.find params[:id]
 
         if not user_has_permission_to_modify?(@document)
-            redirect_to @document, alert: 'You don\'t have permission to edit this document.'
+            redirect_to @document, flash: { error: 'You don\'t have permission to edit this document.' }
         end
     end
 
@@ -30,7 +26,7 @@ class DocumentsController < ApplicationController
         @document.user = current_user
 
         if @document.save
-            redirect_to @document
+            redirect_to @document, flash: { success: "#{@document.name} created!" }
         else
             render 'new'
         end
@@ -40,7 +36,7 @@ class DocumentsController < ApplicationController
         @document = Document.find params[:id]
 
         if user_has_permission_to_modify?(@document) and @document.update document_params
-            redirect_to @document
+            redirect_to @document, flash: { success: "#{@document.name} saved!" }
         else
             render 'edit'
         end
@@ -53,7 +49,7 @@ class DocumentsController < ApplicationController
             @document.destroy
             redirect_to 'index'
         else
-            render 'show', alert: 'You don\'t have permission to delete this document.'
+            render 'show', flash: { error: 'You don\'t have permission to delete this document.' }
         end
 
     end
@@ -63,9 +59,9 @@ class DocumentsController < ApplicationController
         @document = clone_and_reassign_document @parent
 
         if @document.update forked: true, forked_from: @parent.id
-            redirect_to edit_document_path @document, notice: 'Document forked!'
+            redirect_to edit_document_path(@document), flash: { notice: 'Document forked!' }
         else
-            render @parent, alert: 'Document could not be duplicated'
+            render @parent, flash: { error: 'Document could not be forked.' }
         end
     end
 
@@ -79,7 +75,7 @@ class DocumentsController < ApplicationController
     def catch_record_not_found
         yield
     rescue ActiveRecord::RecordNotFound
-        redirect_to root_path, alert: 'Document not found.'
+        redirect_to root_path, flash: { alert: 'Document not found.' }
     end
 
     def user_has_permission_to_modify?(document)

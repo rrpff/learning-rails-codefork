@@ -7,9 +7,24 @@
     <%= csrf_meta_tags %>
 </head>
 <body>
+
 <%= render 'layouts/flashes' %>
 
-<%= yield %>
+<div class="container">
+    <%= yield %>
+</div>
 
+<script>
+    var App = {
+        controller: '<%= controller_name %>',
+        action: '<%= action_name %>'
+    }
+
+    console.log(App);
+
+<% if @document %>
+    var DOCUMENT_LANG = '<%= @document.language %>';
+<% end %>
+</script>
 </body>
 </html>

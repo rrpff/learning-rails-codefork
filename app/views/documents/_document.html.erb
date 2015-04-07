@@ -1,0 +1,21 @@
+<li>
+    <ul class="metadata">
+        <li><i class="icon-title"></i> <%= link_to document.name, document_path(document) %></li>
+        <li><i class="icon-code"></i> <%= document.language %></li>
+        <li><i class="icon-user"></i> <%= display_username document.user %></li>
+        <li><i class="icon-clock"></i> <%= time_ago_in_words document.created_at %> ago</li>
+    <% if document.forked %>
+        <li><i class="fork"></i> <%= document.forked_from.to_json %></li>
+    <% end %>
+    </ul>
+    <ul class="options">
+        <li><i class="icon-fork"></i> <%= link_to 'Fork', fork_document_path(document) %></li>
+
+    <% if current_user === document.user %>
+        <li><i class="icon-edit"></i> <%= link_to 'Update', edit_document_path(document) %></li>
+        <li><i class="icon-trash"></i> <%= link_to 'Delete', document, method: :delete,
+            data: { confirm: "Are you sure you want to delete #{document.name}?" }
+        %></li>
+    <% end %>
+    </ul>
+</li>

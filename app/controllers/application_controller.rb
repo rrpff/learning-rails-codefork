@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
     private
 
-    # Emulate some devise helpers
+    # Emulate some devise helpers...
     def current_user
         user_signed_in? ? User.find(session[:user_id]) : nil
     end

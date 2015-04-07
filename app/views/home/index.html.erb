@@ -2,12 +2,24 @@
 
 <header>
     <h1>Codefork</h1>
-    <p>Code pastebin thing.</p>
 
     <% if user_signed_in? %>
         Hello <%= current_user.username %>. <%= link_to 'Sign out.', logout_path %>
-        <%= link_to 'Create a new paste', new_document_path %>
+        <p>
+            <a href="<%= new_document_path %>" class="button button-large">
+                <i class="icon-edit"></i> Create a new post
+            </a>
+        </p>
     <% else %>
-        <%= link_to 'Sign in with Github', '/auth/github' %>
+        <p>
+            <a href="/auth/github" class="button button-large">
+                <i class="icon-github"></i> Sign in with Github
+            </a>
+        </p>
     <% end %>
 </header>
+
+<h3>Recent posts</h3>
+<ul class="document-list">
+    <%= render @documents %>
+</ul>

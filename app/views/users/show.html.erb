@@ -1,0 +1,9 @@
+<%= content_for :title, "@" + @user.username %>
+
+<h1><%= display_username @user %></h1>
+<%= link_to '< Go back home', root_path %>
+
+<h3><%= pluralize @user.documents.length, 'post' %></h3>
+<ul class="document-list">
+    <%= render latest(@user.documents) %>
+</ul>

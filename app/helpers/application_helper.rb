@@ -6,4 +6,8 @@ module ApplicationHelper
         title
     end
 
+    def display_username(user)
+        link_to "@" + user.username, user_path(user)
+    end
+
 end

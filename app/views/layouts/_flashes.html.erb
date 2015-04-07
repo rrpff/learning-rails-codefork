@@ -1,11 +1,6 @@
 <ul class="flashes">
-    <% if alert %>
-        <li class='alert'><%= alert %></li>
-    <% end %>
-
-    <% yield :errors %>
-
-    <% if notice %>
-        <li class='notice'><%= notice %></li>
+    <%= yield :errors %>
+    <% flash.each do |type, msg| %>
+        <li class='<%= type %>'><%= msg %></li>
     <% end %>
 </ul>

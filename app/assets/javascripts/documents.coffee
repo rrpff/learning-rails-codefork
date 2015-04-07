@@ -1,43 +1,59 @@
 $ ->
 
-    # Set CodeMirror to use CDNjs for mode files - see ./loadmode.js
-    CodeMirror.modeURL = "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.1.0/mode/%N/%N.js"
+    if App.controller is 'documents'
 
-    setEditorMode = ->
-        mode = modeSelect.val()
-        editor.setOption 'mode', mode
-        CodeMirror.autoLoadMode editor, mode
+        # Set CodeMirror to use CDNjs for mode files - see ./loadmode.js
+        CodeMirror.modeURL = "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.1.0/mode/%N/%N.js"
 
-    form = $('#new_document,#edit_document')
-    textarea = $('#document_content')
-    modeSelect = $('#document_language')
+        setEditorMode = (mode) ->
+            editor.setOption 'mode', mode
+            CodeMirror.autoLoadMode editor, mode
 
-    if form.length
+        form = $('.new_document,.edit_document')
+
+        textarea = $('#document_content')
+        modeSelect = $('#document_language')
 
         # Create a CodeMirror instance
         editor = CodeMirror document.body,
-            value: textarea.html()
-            theme: 'Glacier'
-            mode: 'ruby'
+            theme: 'monokai-sublime'
+            lineWrapping: true
             lineNumbers: true
 
-        # Start focussed
-        editor.focus()
+        # If a form exists assume #new or #edit
+        if form.length
 
-        # Add modes to <select>
-        for mode in CodeMirror.modeInfo
-            modeSelect.append $("<option value='#{mode.mode}'>#{mode.name}</option>")
+            # Start focussed
+            editor.focus()
 
-        # document was set in the form view
-        if document and document.language
-            modeSelect.val document.language
+            # Set initial value
+            editor.setValue textarea.html()
+
+            # Add modes to <select>
+            for mode in CodeMirror.modeInfo
+                modeSelect.append $("<option value='#{mode.mode}'>#{mode.name}</option>")
+
+            # DOCUMENT_LANG was set in the application layout
+            if DOCUMENT_LANG
+                modeSelect.val DOCUMENT_LANG
+            else
+                modeSelect.val 'null' # null is plaintext
+
+            # Change codemirror mode
+            setEditorMode modeSelect.val()
+            modeSelect.on 'change', ->
+                setEditorMode modeSelect.val()
+
+            # Add value back to form on submit
+            form.on 'submit', ->
+                textarea.html editor.getValue()
+
+        # Otherwise assume #show
         else
-            modeSelect.val 'null' # null is plaintext
 
-        # Change codemirror mode
-        setEditorMode()
-        modeSelect.on 'change', setEditorMode
+            editor.setOption 'readOnly', true
+            setEditorMode DOCUMENT_LANG
 
-        # Add value back to form on submit
-        form.on 'submit', ->
-            textarea.html editor.getValue()
+            documentContent = $('#document-content')
+            editor.setValue documentContent.html()
+            documentContent.remove()

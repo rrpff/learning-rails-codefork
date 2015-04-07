@@ -6,10 +6,12 @@ Rails.application.routes.draw do
     get '/auth/:provider/callback', to: 'sessions#create'
     get '/logout', to: 'sessions#destroy'
 
-    resources :documents, path: '/' do
+    resources :documents, path: 'post' do
         member do
             get 'fork'
         end
     end
+
+    resources :users
 
 end

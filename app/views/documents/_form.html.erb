@@ -1,7 +1,7 @@
-<% if @document.errors.any? %>
-    <%= content_for :errors do %>
+<%= content_for :errors do %>
+    <% if @document.errors.any? %>
         <% for message in @document.errors.full_messages %>
-            <li><%= message %></li>
+            <li class='error'><%= message %></li>
         <% end %>
     <% end %>
 <% end %>
@@ -10,11 +10,7 @@
     <%= form_for @document do |f| %>
         <%= f.text_field :name, autofocus: true, placeholder: 'Name' %>
         <%= f.select :language, '<option>Select language</option>' %>
-        <%= f.text_area :content %>
+        <%= f.text_area :content, hidden: true %>
         <%= f.submit %>
     <% end %>
-<% end %>
-
-<% if @document %>
-    <script>var document = JSON.parse('<%= @document.to_json.html_safe %>');</script>
 <% end %>

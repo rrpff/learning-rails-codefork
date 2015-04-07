@@ -1,0 +1,6 @@
+<li>
+    <img class='avatar' src="<%= user.avatar %>">
+    <strong class='username'><%= display_username user %></strong>
+    <span class='time'>/ User for <%= time_ago_in_words(user.created_at) %></span>
+    <span class="documents">/ <%= pluralize(user.documents.length, 'post') %></span>
+</li>
